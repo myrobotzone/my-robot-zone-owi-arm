@@ -1,11 +1,5 @@
-﻿using owi_arm_dotnet;
-using SuperSocket.SocketBase;
-using SuperSocket.SocketBase.Protocol;
+﻿using robot_arm_server;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace my_robot_zone_owi_arm
 {
@@ -18,46 +12,14 @@ namespace my_robot_zone_owi_arm
             Console.ReadKey();
             Console.WriteLine();
 
-            var appServer = new AppServer();
-
-            //Setup the appServer
-            if (!appServer.Setup(5000)) //Setup with listening port
+            var logger = new ConsoleLogger();
+            var robotArmServer = new RobotArmServer(logger);
+            if (!robotArmServer.Start())
             {
-                Console.WriteLine("Failed to setup!");
+                logger.Log("Failed to start server");
                 Console.ReadKey();
                 return;
             }
-
-            Console.WriteLine();
-
-            //Try to start the appServer
-            if (!appServer.Start())
-            {
-                Console.WriteLine("Failed to start!");
-                Console.ReadKey();
-                return;
-            }
-
-            IOwiArm arm = new OwiArm();
-            IOwiCommand command = new OwiCommand();
-
-            try
-            {
-                arm.Connect();
-            }
-            catch(Exception e)
-            {
-                appServer.Stop();
-                Console.WriteLine(e.Message);
-                Console.ReadKey();
-                return;
-            }
-
-            var newSessionHandler = new SessionHandler<AppSession>(appServer_NewSessionConnected);
-            appServer.NewSessionConnected += newSessionHandler;
-
-            var newRequestReceived = new RequestHandler<AppSession, StringRequestInfo>((session, requestInfo) => appServer_NewRequestReceived(session, requestInfo, arm, command));
-            appServer.NewRequestReceived += newRequestReceived;
 
             Console.WriteLine("The server started successfully, press key 'q' to stop it!");
 
@@ -67,27 +29,18 @@ namespace my_robot_zone_owi_arm
                 continue;
             }
 
-            //Stop the appServer
-            appServer.Stop();
-            arm.SendCommand(command.StopAllMovements().LedOff());
-            arm.Disconnect();
-
-            appServer.NewSessionConnected -= newSessionHandler;
-            appServer.NewRequestReceived -= newRequestReceived;
+            robotArmServer.Stop();
 
             Console.WriteLine("The server was stopped!");
             Console.ReadKey();
         }
 
-        private static void appServer_NewSessionConnected(AppSession session)
+        class ConsoleLogger : ILogger
         {
-            Console.WriteLine(string.Format("Session connected: {0}", session.RemoteEndPoint.Address));
-        }
-
-        private static void appServer_NewRequestReceived(AppSession session, StringRequestInfo requestInfo, IOwiArm arm, IOwiCommand command)
-        {
-            Console.WriteLine(string.Format("Received message {0}", requestInfo.Body));
-            arm.SendCommand(command.LedOn());
+            public void Log(string format, params object[] args)
+            {
+                Console.WriteLine(string.Format(format, args));
+            }
         }
     }
 }

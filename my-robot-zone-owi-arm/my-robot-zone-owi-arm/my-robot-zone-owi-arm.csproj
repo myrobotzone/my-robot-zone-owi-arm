@@ -34,22 +34,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LibUsbDotNet">
-      <HintPath>..\packages\LibUsbDotNet.2.2.8\lib\LibUsbDotNet.dll</HintPath>
-    </Reference>
-    <Reference Include="log4net">
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="owi-arm-dotnet">
-      <HintPath>..\packages\owi-arm-dotnet.1.0.0.0\lib\net45\owi-arm-dotnet.dll</HintPath>
-    </Reference>
-    <Reference Include="SuperSocket.Common">
+    <Reference Include="SuperSocket.Common, Version=1.6.5.0, Culture=neutral, PublicKeyToken=6c80000676988ebb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\SuperSocket.1.6.5\lib\net45\SuperSocket.Common.dll</HintPath>
     </Reference>
     <Reference Include="SuperSocket.Facility">
       <HintPath>..\packages\SuperSocket.1.6.5\lib\net45\SuperSocket.Facility.dll</HintPath>
     </Reference>
-    <Reference Include="SuperSocket.SocketBase">
+    <Reference Include="SuperSocket.SocketBase, Version=1.6.5.0, Culture=neutral, PublicKeyToken=6c80000676988ebb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\SuperSocket.1.6.5\lib\net45\SuperSocket.SocketBase.dll</HintPath>
     </Reference>
     <Reference Include="SuperSocket.SocketEngine">
@@ -57,9 +54,6 @@
     </Reference>
     <Reference Include="SuperSocket.SocketService">
       <HintPath>..\packages\SuperSocket.Engine.1.6.5.1\lib\net45\SuperSocket.SocketService.exe</HintPath>
-    </Reference>
-    <Reference Include="SuperSocket.WebSocket">
-      <HintPath>..\packages\SuperSocket.WebSocket.1.6.5\lib\net45\SuperSocket.WebSocket.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -81,6 +75,12 @@
     <None Include="packages.config" />
     <None Include="supersocket.cmd" />
     <None Include="supersocket.sh" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\robot-arm-server\robot-arm-server.csproj">
+      <Project>{3894b7ed-bef7-41ca-8874-e2f5ec8d0997}</Project>
+      <Name>robot-arm-server</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
