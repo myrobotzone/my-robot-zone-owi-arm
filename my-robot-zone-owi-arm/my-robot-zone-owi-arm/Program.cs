@@ -16,7 +16,7 @@ namespace my_robot_zone_owi_arm
             var robotArmServer = new RobotArmServer(logger);
             if (!robotArmServer.Start())
             {
-                logger.Log("Failed to start server");
+                Console.WriteLine("Failed to start server");
                 Console.ReadKey();
                 return;
             }

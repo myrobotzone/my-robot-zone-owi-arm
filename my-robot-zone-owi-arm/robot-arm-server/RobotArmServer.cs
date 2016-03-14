@@ -1,13 +1,14 @@
 ﻿using owi_arm_dotnet;
 using SuperSocket.SocketBase;
 using SuperSocket.SocketBase.Protocol;
+using SuperSocket.WebSocket;
 using System;
 
 namespace robot_arm_server
 {
     public class RobotArmServer : IRobotArmServer
     {
-        AppServer appServer = new AppServer();
+        WebSocketServer appServer = new WebSocketServer();
         IOwiArm arm = new OwiArm();
         IOwiCommand command = new OwiCommand();
         ILogger logger;
@@ -26,7 +27,7 @@ namespace robot_arm_server
         {
             this.appServer.Stop();
             this.appServer.NewSessionConnected -= this.appServer_NewSessionConnected;
-            this.appServer.NewRequestReceived -= this.appServer_NewRequestReceived;
+            this.appServer.NewMessageReceived -= this.appServer_NewRequestReceived;
             this.arm.SendCommand(command.StopAllMovements().LedOff());
             this.arm.Disconnect();
         }
@@ -46,11 +47,10 @@ namespace robot_arm_server
             }
 
             this.appServer.NewSessionConnected += this.appServer_NewSessionConnected;
-            this.appServer.NewRequestReceived += this.appServer_NewRequestReceived;
+            this.appServer.NewMessageReceived += this.appServer_NewRequestReceived;
 
             return true;
         }
-
 
         private bool StartOwiArm()
         {
@@ -70,15 +70,58 @@ namespace robot_arm_server
             return true;
         }
 
-        void appServer_NewSessionConnected(AppSession session)
+        void appServer_NewSessionConnected(WebSocketSession session)
         {
             this.logger.Log("Session connected: {0}", session.RemoteEndPoint.Address);
         }
 
-        void appServer_NewRequestReceived(AppSession session, StringRequestInfo requestInfo)
+        enum FeatureId
         {
-            this.logger.Log("Received message {0}", requestInfo.Body);
-            this.arm.SendCommand(this.command.LedOn());
+            Led,
+            Gripper,
+            Wrist,
+            Elbow,
+            Shoulder,
+            Base
+
+        }
+
+        void appServer_NewRequestReceived(WebSocketSession session, string message)
+        {
+            this.logger.Log("Received message {0}", message);
+
+            try
+            {
+                var parts = message.Split(':');
+                var featureId = (FeatureId)Enum.Parse(typeof(FeatureId), parts[0]);
+                var value = int.Parse(parts[1]);
+                switch (featureId)
+                {
+                    case FeatureId.Led:
+                        if (value == 0)
+                            this.command = this.command.LedOff();
+                        else
+                            this.command = this.command.LedOn();
+                        break;
+                    case FeatureId.Gripper:
+                        break;
+                    case FeatureId.Wrist:
+                        break;
+                    case FeatureId.Elbow:
+                        break;
+                    case FeatureId.Shoulder:
+                        break;
+                    case FeatureId.Base:
+                        break;
+                    default:
+                        break;
+                }
+                this.arm.SendCommand(this.command);
+            }
+            catch (Exception e)
+            {
+                this.logger.Log("{0}", e.Message);
+            }
         }
     }
 }
