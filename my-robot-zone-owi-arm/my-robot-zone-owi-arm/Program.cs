@@ -1,4 +1,5 @@
 ﻿using robot_arm_server;
+using robot_arm_server.MessageHandlers;
 using System;
 
 namespace my_robot_zone_owi_arm
@@ -12,8 +13,11 @@ namespace my_robot_zone_owi_arm
             Console.ReadKey();
             Console.WriteLine();
 
-            var logger = new ConsoleLogger();
-            var robotArmServer = new RobotArmServer(logger);
+            ILogger logger = new ConsoleLogger();
+            //IMessageHandler handler = new OwiArmMessageHandler(logger);
+            IMessageHandler handler = new DefaultMessageHandler(logger);
+
+            var robotArmServer = new RobotServer(handler, logger);
             if (!robotArmServer.Start())
             {
                 Console.WriteLine("Failed to start server");

@@ -70,8 +70,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ILogger.cs" />
-    <Compile Include="IRobotArmServer.cs" />
-    <Compile Include="RobotArmServer.cs" />
+    <Compile Include="IMessageHandler.cs" />
+    <Compile Include="IRobotServer.cs" />
+    <Compile Include="MessageHandlers\DefaultMessageHandler.cs" />
+    <Compile Include="MessageHandlers\OwiArmMessageHandler.cs" />
+    <Compile Include="RobotServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
