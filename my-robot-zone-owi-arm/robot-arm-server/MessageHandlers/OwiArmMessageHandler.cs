@@ -60,14 +60,44 @@ namespace robot_arm_server.MessageHandlers
                             this.command = this.command.LedOn();
                         break;
                     case FeatureId.Gripper:
+                        if (value == 0)
+                            this.command.GripperClose();
+                        else if (value == 1)
+                            this.command.GripperStop();
+                        else
+                            this.command.GripperOpen();
                         break;
                     case FeatureId.Wrist:
+                        if (value == 0)
+                            this.command.WristDown();
+                        else if (value == 1)
+                            this.command.WristStop();
+                        else
+                            this.command.WristUp();
                         break;
                     case FeatureId.Elbow:
+                        if (value == 0)
+                            this.command.ElbowDown();
+                        else if (value == 1)
+                            this.command.ElbowStop();
+                        else
+                            this.command.ElbowUp();
                         break;
                     case FeatureId.Shoulder:
+                        if (value == 0)
+                            this.command.ShoulderDown();
+                        else if (value == 1)
+                            this.command.ShoulderStop();
+                        else
+                            this.command.ShoulderUp();
                         break;
                     case FeatureId.Base:
+                        if (value == 0)
+                            this.command.BaseRotateClockwise();
+                        else if (value == 1)
+                            this.command.BaseRotateStop();
+                        else
+                            this.command.BaseRotateCounterClockwise();
                         break;
                     default:
                         break;
