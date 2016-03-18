@@ -13,24 +13,22 @@ using System.IO;
 namespace robot_arm_server
 {
     // Code taken from http://blog.differentpla.net/blog/2013/03/18/using-bouncy-castle-from-net/
-    public static class SSLCertificateGenerator
+    public class SSLCertificateGenerator : robot_arm_server.ISSLCertificateGenerator
     {
-        public static void Generate(string path, string password)
+        public void Generate(string path, string password)
         {
             var randomGenerator = new CryptoApiRandomGenerator();
             var random = new SecureRandom(randomGenerator);
 
             var certificateGenerator = new X509V3CertificateGenerator();
 
-            var serialNumber =
-    BigIntegers.CreateRandomInRange(
-        BigInteger.One, BigInteger.ValueOf(Int64.MaxValue), random);
+            var serialNumber = BigIntegers.CreateRandomInRange(BigInteger.One, BigInteger.ValueOf(Int64.MaxValue), random);
             certificateGenerator.SetSerialNumber(serialNumber);
 
             const string signatureAlgorithm = "SHA256WithRSA";
             certificateGenerator.SetSignatureAlgorithm(signatureAlgorithm);
 
-            var subjectName = "C=AU, ST=Victoria";
+            var subjectName = "C=myrobotzone, ST=myrobotzone";
             var subjectDN = new X509Name(subjectName);
             var issuerDN = subjectDN;
             certificateGenerator.SetIssuerDN(issuerDN);

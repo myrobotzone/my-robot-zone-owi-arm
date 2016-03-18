@@ -1,5 +1,6 @@
 ﻿using SuperSocket.SocketBase.Config;
 using SuperSocket.WebSocket;
+using System.IO;
 using System.Security.Cryptography.X509Certificates;
 
 namespace robot_arm_server
@@ -9,6 +10,8 @@ namespace robot_arm_server
         readonly WebSocketServer appServer = new WebSocketServer();
         readonly IMessageHandler messageHander;
         readonly ILogger logger;
+        readonly ISystemInterface systemInterface = new SystemInterface();
+        readonly ISSLCertificateGenerator certificateGenerator = new SSLCertificateGenerator();
 
         public RobotServer(IMessageHandler messageHandler, ILogger logger)
         {
@@ -42,35 +45,55 @@ namespace robot_arm_server
 
         private bool StartSocketServer()
         {
-            const string certificatePath = @"c:\temp\cert.pfx";
+            string certficateFile = Path.Combine(this.systemInterface.GetTempPath(), "myrobotzone.pfx");
             const string password = "myrobotzone";
-            //SSLCertificateGenerator.Generate(certificatePath, password);
 
+            this.GenerateCertficate(certficateFile, password);
+
+            IServerConfig config = CreateConfiguration(certficateFile, password);
+
+            if (!this.appServer.Setup(config))
+            {
+                this.logger.Log("Failed to setup socket server to listen on port {0}", config.Port);
+                return false;
+            }
+            
+            if (!this.appServer.Start())
+            {
+                this.logger.Log("Failed to start socket server");
+                return false;
+            }
+            
+            this.appServer.NewSessionConnected += this.appServer_NewSessionConnected;
+            this.appServer.NewMessageReceived += this.appServer_NewRequestReceived;
+
+            return true;
+        }
+
+        private static IServerConfig CreateConfiguration(string certficateFile, string password)
+        {
             IServerConfig config = new ServerConfig
             {
                 Port = 5000,
                 Security = "tls",
                 Certificate = new CertificateConfig
                 {
-                    FilePath = certificatePath,
+                    FilePath = certficateFile,
                     Password = password,
                     KeyStorageFlags = X509KeyStorageFlags.MachineKeySet
                 }
             };
-            if (!this.appServer.Setup(config))
-            {
-                this.logger.Log("Failed to setup socket server to listen on port {0}", config.Port);
-                return false;
-            }
-            if (!this.appServer.Start())
-            {
-                this.logger.Log("Failed to start socket server");
-                return false;
-            }
-            this.appServer.NewSessionConnected += this.appServer_NewSessionConnected;
-            this.appServer.NewMessageReceived += this.appServer_NewRequestReceived;
+            return config;
+        }
 
-            return true;
+        private void GenerateCertficate(string certficateFile, string password)
+        {
+            this.logger.Log("Generating {0} (this can take a few seconds)...", certficateFile);
+            if (this.systemInterface.FileExists(certficateFile))
+            {
+                return;
+            }
+            this.certificateGenerator.Generate(certficateFile, password);
         }
 
         void appServer_NewSessionConnected(WebSocketSession session)
