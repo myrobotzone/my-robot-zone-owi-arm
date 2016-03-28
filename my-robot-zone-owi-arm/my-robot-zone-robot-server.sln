@@ -5,14 +5,14 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "my-robot-zone-owi-arm", "my-robot-zone-owi-arm\my-robot-zone-owi-arm.csproj", "{6D811386-6983-42B2-BCB9-C58C103CC91A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "my-robot-zone-robot-server", "robot-arm-server\my-robot-zone-robot-server.csproj", "{3894B7ED-BEF7-41CA-8874-E2F5EC8D0997}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{435D3606-4F9B-4724-B919-D0FBCCEE5A57}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "my-robot-zone-robot-server", "my-robot-zone-robot-server\my-robot-zone-robot-server.csproj", "{3894B7ED-BEF7-41CA-8874-E2F5EC8D0997}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
