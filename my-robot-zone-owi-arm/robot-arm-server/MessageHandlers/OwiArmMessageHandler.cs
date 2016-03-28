@@ -1,7 +1,7 @@
 ﻿using owi_arm_dotnet;
 using System;
 
-namespace robot_arm_server.MessageHandlers
+namespace my_robot_zone_robot_server.MessageHandlers
 {
     public class OwiArmMessageHandler : IMessageHandler
     {

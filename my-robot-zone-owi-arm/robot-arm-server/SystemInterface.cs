@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace robot_arm_server
+namespace my_robot_zone_robot_server
 {
     class SystemUtils : ISystemUtils
     {

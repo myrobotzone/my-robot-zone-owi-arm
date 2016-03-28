@@ -1,4 +1,4 @@
-﻿namespace robot_arm_server.MessageHandlers
+﻿namespace my_robot_zone_robot_server.MessageHandlers
 {
     public class DefaultMessageHandler : IMessageHandler
     {

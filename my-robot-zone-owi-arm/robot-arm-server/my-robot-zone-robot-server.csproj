@@ -7,8 +7,8 @@
     <ProjectGuid>{3894B7ED-BEF7-41CA-8874-E2F5EC8D0997}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>robot_arm_server</RootNamespace>
-    <AssemblyName>robot-arm-server</AssemblyName>
+    <RootNamespace>my_robot_zone_robot_server</RootNamespace>
+    <AssemblyName>my-robot-zone-robot-server</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>

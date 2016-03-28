@@ -78,9 +78,9 @@
     <None Include="supersocket.sh" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\robot-arm-server\robot-arm-server.csproj">
+    <ProjectReference Include="..\robot-arm-server\my-robot-zone-robot-server.csproj">
       <Project>{3894b7ed-bef7-41ca-8874-e2f5ec8d0997}</Project>
-      <Name>robot-arm-server</Name>
+      <Name>my-robot-zone-robot-server</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

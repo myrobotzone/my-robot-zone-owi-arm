@@ -1,4 +1,4 @@
-﻿namespace robot_arm_server
+﻿namespace my_robot_zone_robot_server
 {
     public interface ILogger
     {

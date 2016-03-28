@@ -10,10 +10,10 @@ using Org.BouncyCastle.X509;
 using System;
 using System.IO;
 
-namespace robot_arm_server
+namespace my_robot_zone_robot_server
 {
     // Code taken from http://blog.differentpla.net/blog/2013/03/18/using-bouncy-castle-from-net/
-    public class SSLCertificateGenerator : robot_arm_server.ISSLCertificateGenerator
+    public class SSLCertificateGenerator : ISSLCertificateGenerator
     {
         public void Generate(string path, string password)
         {

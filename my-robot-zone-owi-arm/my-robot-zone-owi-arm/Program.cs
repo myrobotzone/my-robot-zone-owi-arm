@@ -1,5 +1,5 @@
-﻿using robot_arm_server;
-using robot_arm_server.MessageHandlers;
+﻿using my_robot_zone_robot_server;
+using my_robot_zone_robot_server.MessageHandlers;
 using System;
 
 namespace my_robot_zone_owi_arm

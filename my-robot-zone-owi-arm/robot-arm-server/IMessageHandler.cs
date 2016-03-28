@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace robot_arm_server
+namespace my_robot_zone_robot_server
 {
     public interface IMessageHandler
     {

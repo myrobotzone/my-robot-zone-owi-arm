@@ -3,7 +3,7 @@ using SuperSocket.WebSocket;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
 
-namespace robot_arm_server
+namespace my_robot_zone_robot_server
 {
     public class RobotServer : IRobotServer
     {
