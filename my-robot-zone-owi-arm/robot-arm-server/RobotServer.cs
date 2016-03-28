@@ -10,7 +10,7 @@ namespace robot_arm_server
         readonly WebSocketServer appServer = new WebSocketServer();
         readonly IMessageHandler messageHander;
         readonly ILogger logger;
-        readonly ISystemInterface systemInterface = new SystemInterface();
+        readonly ISystemUtils systemUtils = new SystemUtils();
         readonly ISSLCertificateGenerator certificateGenerator = new SSLCertificateGenerator();
 
         public RobotServer(IMessageHandler messageHandler, ILogger logger)
@@ -45,7 +45,7 @@ namespace robot_arm_server
 
         private bool StartSocketServer()
         {
-            string certficateFile = Path.Combine(this.systemInterface.GetTempPath(), "myrobotzone.pfx");
+            string certficateFile = Path.Combine(this.systemUtils.GetTempPath(), "myrobotzone.pfx");
             const string password = "myrobotzone";
 
             this.GenerateCertficate(certficateFile, password);
@@ -89,7 +89,7 @@ namespace robot_arm_server
         private void GenerateCertficate(string certficateFile, string password)
         {
             this.logger.Log("Generating {0} (this can take a few seconds)...", certficateFile);
-            if (this.systemInterface.FileExists(certficateFile))
+            if (this.systemUtils.FileExists(certficateFile))
             {
                 return;
             }
