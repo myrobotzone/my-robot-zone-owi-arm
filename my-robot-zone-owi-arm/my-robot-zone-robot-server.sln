@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "my-robot-zone-owi-arm", "my-robot-zone-owi-arm\my-robot-zone-owi-arm.csproj", "{6D811386-6983-42B2-BCB9-C58C103CC91A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "my-robot-zone-robot-server-owi-arm", "my-robot-zone-owi-arm\my-robot-zone-robot-server-owi-arm.csproj", "{6D811386-6983-42B2-BCB9-C58C103CC91A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{435D3606-4F9B-4724-B919-D0FBCCEE5A57}"
 	ProjectSection(SolutionItems) = preProject
