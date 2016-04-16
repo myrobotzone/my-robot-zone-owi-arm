@@ -8,10 +8,10 @@ namespace my_robot_zone_robot_server
 {
     public interface IMessageHandler
     {
-        bool Start();
+        Task<bool> StartAsync();
 
-        void HandleMessage(string message);
+        Task HandleMessageAsync(string message);
 
-        void Stop();
+        Task StopAsync();
     }
 }

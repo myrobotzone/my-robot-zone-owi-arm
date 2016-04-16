@@ -1,4 +1,5 @@
-﻿namespace my_robot_zone_robot_server.MessageHandlers
+﻿using System.Threading.Tasks;
+namespace my_robot_zone_robot_server.MessageHandlers
 {
     public class DefaultMessageHandler : IMessageHandler
     {
@@ -9,20 +10,23 @@
             this.logger = logger;
         }
 
-        public bool Start()
+        public Task<bool> StartAsync()
         {
             this.logger.Log("Default message handler started");
-            return true;
+            return Task.FromResult(true);
         }
 
-        public void HandleMessage(string message)
+        public Task HandleMessageAsync(string message)
         {
             this.logger.Log("Received message {0}", message);
+            return Task.FromResult(true);
         }
 
-        public void Stop()
+        public Task StopAsync()
         {
             this.logger.Log("Default message handler stopped");
+            return Task.FromResult(true);
+
         }
     }
 }

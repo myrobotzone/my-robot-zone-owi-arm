@@ -2,7 +2,7 @@
 using my_robot_zone_robot_server.MessageHandlers;
 using System;
 
-namespace my_robot_zone_owi_arm
+namespace my_robot_zone_robot_server_owi_arm
 {
     class Program
     {

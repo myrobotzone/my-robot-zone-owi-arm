@@ -26,7 +26,7 @@ namespace my_robot_zone_robot_server
                 return false;
             }
 
-            if (!this.messageHander.Start())
+            if (!this.messageHander.StartAsync().Result)
             {
                 this.appServer.Stop();
                 return false;
@@ -40,7 +40,7 @@ namespace my_robot_zone_robot_server
             this.appServer.Stop();
             this.appServer.NewSessionConnected -= this.appServer_NewSessionConnected;
             this.appServer.NewMessageReceived -= this.appServer_NewRequestReceived;
-            this.messageHander.Stop();
+            this.messageHander.StopAsync();
         }
 
         private bool StartSocketServer()
@@ -103,7 +103,7 @@ namespace my_robot_zone_robot_server
 
         void appServer_NewRequestReceived(WebSocketSession session, string message)
         {
-            this.messageHander.HandleMessage(message);
+            this.messageHander.HandleMessageAsync(message);
         }
     }
 }

@@ -1,24 +1,30 @@
-﻿using owi_arm_dotnet;
+﻿using my_robot_zone_robot_server;
+using owi_arm_dotnet;
+using owi_arm_dotnet_usb;
 using System;
+using System.Threading.Tasks;
 
-namespace my_robot_zone_robot_server.MessageHandlers
+namespace my_robot_zone_robot_server_owi_arm
 {
     public class OwiArmMessageHandler : IMessageHandler
     {
-        readonly IOwiArm arm = new OwiArm();
-        IOwiCommand command = new OwiCommand();
+        readonly IOwiArm arm;
+        IOwiCommand command;
         readonly ILogger logger;
 
         public OwiArmMessageHandler(ILogger logger)
         {
             this.logger = logger;
+            var factory = new OwiFactory();
+            this.arm = factory.CreateArm(new LibUsbOwiConnection());
+            this.command = factory.CreateCommand();
         }
 
-        public bool Start()
+        public async Task<bool> StartAsync()
         {
             try
             {
-                arm.Connect();
+                await arm.ConnectAsync();
             }
             catch (Exception e)
             {
@@ -42,7 +48,7 @@ namespace my_robot_zone_robot_server.MessageHandlers
 
         }
 
-        public void HandleMessage(string message)
+        public async Task HandleMessageAsync(string message)
         {
             //this.logger.Log("Received message {0}", message);
 
@@ -102,7 +108,7 @@ namespace my_robot_zone_robot_server.MessageHandlers
                     default:
                         break;
                 }
-                this.arm.SendCommand(this.command);
+                await this.arm.SendCommandAsync(this.command);
             }
             catch (Exception e)
             {
@@ -110,10 +116,10 @@ namespace my_robot_zone_robot_server.MessageHandlers
             }
         }
 
-        public void Stop()
+        public async Task StopAsync()
         {
-            this.arm.SendCommand(command.StopAllMovements().LedOff());
-            this.arm.Disconnect();
+            await this.arm.SendCommandAsync(command.StopAllMovements().LedOff());
+            await this.arm.DisconnectAsync();
         }
     }
 }
