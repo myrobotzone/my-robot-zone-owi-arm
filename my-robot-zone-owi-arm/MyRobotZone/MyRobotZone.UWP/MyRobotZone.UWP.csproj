@@ -99,7 +99,10 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="NetworkStream.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sha1.cs" />
+    <Compile Include="TcpSocketListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -128,6 +131,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BaSocket\BaSocket.csproj">
+      <Project>{6a5e20b4-3dfe-47d4-b9b9-359c361c48e7}</Project>
+      <Name>BaSocket</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MyRobotZone\MyRobotZone.csproj">
       <Name>MyRobotZone</Name>
     </ProjectReference>

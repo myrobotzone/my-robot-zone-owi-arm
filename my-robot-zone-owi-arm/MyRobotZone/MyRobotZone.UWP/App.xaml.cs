@@ -1,8 +1,10 @@
-﻿using System;
+﻿using BaSocket;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -78,6 +80,10 @@ namespace MyRobotZone.UWP
             }
             // Ensure the current window is active
             Window.Current.Activate();
+
+            var server = new WebSocketServer(new TcpSocketListener(), new SHA1());
+            var source = new CancellationTokenSource();
+            server.StartAsync(source.Token);
         }
 
         /// <summary>

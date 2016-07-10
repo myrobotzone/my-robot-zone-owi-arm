@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Practices.ServiceLocation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,6 +31,8 @@ namespace MyRobotZone
         protected override void OnStart()
         {
             // Handle when your app starts
+            //var server = ServiceLocator.Current.GetInstance<MyRobotZoneServer>();
+            //server.StartAsync();
         }
 
         protected override void OnSleep()
