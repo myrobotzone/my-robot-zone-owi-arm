@@ -1,7 +1,4 @@
-﻿using BaSocket;
-using System.Threading;
-
-namespace MyRobotZone.UWP
+﻿namespace MyRobotZone.UWP
 {
     public sealed partial class MainPage
     {

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace BaSocket
+namespace AwSocket
 {
     public interface INetworkStream
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace BaSocket
+namespace AwSocket
 {
     internal class HandshakeResponseGenerator : IHandshakeResponseGenerator
     {

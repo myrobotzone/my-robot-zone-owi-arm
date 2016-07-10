@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace BaSocket
+namespace AwSocket
 {
     public interface ITcpListener
     {

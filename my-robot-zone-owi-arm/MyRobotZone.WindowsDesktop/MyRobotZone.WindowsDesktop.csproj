@@ -56,9 +56,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BaSocket\BaSocket.csproj">
+    <ProjectReference Include="..\AwSocket\AwSocket.csproj">
       <Project>{6a5e20b4-3dfe-47d4-b9b9-359c361c48e7}</Project>
-      <Name>BaSocket</Name>
+      <Name>AwSocket</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

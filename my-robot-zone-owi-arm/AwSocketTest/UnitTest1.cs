@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BaSocketTest
+namespace AwSocketTest
 {
     [TestClass]
     public class UnitTest1

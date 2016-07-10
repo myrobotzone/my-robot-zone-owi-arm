@@ -1,4 +1,4 @@
-﻿using BaSocket;
+﻿using AwSocket;
 using System;
 using System.Threading.Tasks;
 using Windows.Networking.Sockets;
@@ -29,7 +29,7 @@ namespace MyRobotZone.UWP
         private void Listener_ConnectionReceived(StreamSocketListener sender, StreamSocketListenerConnectionReceivedEventArgs args)
         {
             var argsCopy = args;
-            var stream = new NetworkStream(argsCopy);
+            AwSocket.INetworkStream stream = new NetworkStream(argsCopy);
             this.ClientConnected?.Invoke(stream);
         }
     }

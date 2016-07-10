@@ -1,4 +1,4 @@
-﻿namespace BaSocket
+﻿namespace AwSocket
 {
     public interface IHandshakeResponseGenerator
     {
