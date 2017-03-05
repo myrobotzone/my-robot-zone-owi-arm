@@ -12,7 +12,7 @@ namespace MyRobotZone.WindowsDesktop
 
         public async Task StartListening()
         {
-            var tcpListener = new TcpListener(IPAddress.Loopback, 5002);
+            var tcpListener = new TcpListener(IPAddress.Loopback, 5000);
             tcpListener.Start();
             var client = await tcpListener.AcceptTcpClientAsync();
             this.ClientConnected?.Invoke(new NetworkStreamWrapper(client));
