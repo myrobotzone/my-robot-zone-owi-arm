@@ -43,7 +43,7 @@ namespace my_robot_zone_robot_server_owi_arm
         {
             public void Log(string format, params object[] args)
             {
-                Console.WriteLine(string.Format(format, args));
+                Console.WriteLine(format, args);
             }
         }
     }
