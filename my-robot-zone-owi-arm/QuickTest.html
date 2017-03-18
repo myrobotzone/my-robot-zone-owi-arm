@@ -14,7 +14,7 @@
 <script type="text/javascript">
         var log = document.getElementById("log");
         log.innerHTML = "hell yeah";
-        var exampleSocket = new WebSocket("ws://localhost:5002");
+        var exampleSocket = new WebSocket("ws://localhost:5000");
         exampleSocket.onmessage = function(message){
             log.innerText = message.data;
         };

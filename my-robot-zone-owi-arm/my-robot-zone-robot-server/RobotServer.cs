@@ -1,34 +1,32 @@
-﻿using SuperSocket.SocketBase.Config;
-using SuperSocket.WebSocket;
-using System.IO;
+﻿using System.IO;
 using System.Security.Cryptography.X509Certificates;
+using SuperSocket.SocketBase.Config;
+using SuperSocket.WebSocket;
 
 namespace my_robot_zone_robot_server
 {
     public class RobotServer : IRobotServer
     {
-        readonly WebSocketServer appServer = new WebSocketServer();
-        readonly IMessageHandler messageHander;
-        readonly ILogger logger;
-        readonly ISystemUtils systemUtils = new SystemUtils();
-        readonly ISSLCertificateGenerator certificateGenerator = new SSLCertificateGenerator();
+        private readonly WebSocketServer _appServer = new WebSocketServer();
+        private readonly ISSLCertificateGenerator _certificateGenerator = new SSLCertificateGenerator();
+        private readonly ILogger _logger;
+        private readonly IMessageHandler _messageHander;
+        private readonly ISystemUtils _systemUtils = new SystemUtils();
 
         public RobotServer(IMessageHandler messageHandler, ILogger logger)
         {
-            this.messageHander = messageHandler;
-            this.logger = logger;
+            _messageHander = messageHandler;
+            _logger = logger;
         }
 
         public bool Start()
         {
             if (!StartSocketServer())
-            {
                 return false;
-            }
 
-            if (!this.messageHander.StartAsync().Result)
+            if (!_messageHander.StartAsync().Result)
             {
-                this.appServer.Stop();
+                _appServer.Stop();
                 return false;
             }
 
@@ -37,35 +35,35 @@ namespace my_robot_zone_robot_server
 
         public void Stop()
         {
-            this.appServer.Stop();
-            this.appServer.NewSessionConnected -= this.appServer_NewSessionConnected;
-            this.appServer.NewMessageReceived -= this.appServer_NewRequestReceived;
-            this.messageHander.StopAsync();
+            _appServer.Stop();
+            _appServer.NewSessionConnected -= appServer_NewSessionConnected;
+            _appServer.NewMessageReceived -= appServer_NewRequestReceived;
+            _messageHander.StopAsync();
         }
 
         private bool StartSocketServer()
         {
-            string certficateFile = Path.Combine(this.systemUtils.GetTempPath(), "myrobotzone.pfx");
+            var certficateFile = Path.Combine(_systemUtils.GetTempPath(), "myrobotzone.pfx");
             const string password = "myrobotzone";
 
-            this.GenerateCertficate(certficateFile, password);
+            GenerateCertficate(certficateFile, password);
 
-            IServerConfig config = CreateConfiguration(certficateFile, password);
+            var config = CreateConfiguration(certficateFile, password);
 
-            if (!this.appServer.Setup(config))
+            if (!_appServer.Setup(config))
             {
-                this.logger.Log("Failed to setup socket server to listen on port {0}", config.Port);
+                _logger.Log("Failed to setup socket server to listen on port {0}", config.Port);
                 return false;
             }
-            
-            if (!this.appServer.Start())
+            _logger.Log("Starting server on localhost:{0}", config.Port);
+            if (!_appServer.Start())
             {
-                this.logger.Log("Failed to start socket server");
+                _logger.Log("Failed to start socket server");
                 return false;
             }
-            
-            this.appServer.NewSessionConnected += this.appServer_NewSessionConnected;
-            this.appServer.NewMessageReceived += this.appServer_NewRequestReceived;
+
+            _appServer.NewSessionConnected += appServer_NewSessionConnected;
+            _appServer.NewMessageReceived += appServer_NewRequestReceived;
 
             return true;
         }
@@ -88,22 +86,20 @@ namespace my_robot_zone_robot_server
 
         private void GenerateCertficate(string certficateFile, string password)
         {
-            this.logger.Log("Generating {0} (this can take a few seconds)...", certficateFile);
-            if (this.systemUtils.FileExists(certficateFile))
-            {
+            _logger.Log("Generating {0} (this can take a few seconds)...", certficateFile);
+            if (_systemUtils.FileExists(certficateFile))
                 return;
-            }
-            this.certificateGenerator.Generate(certficateFile, password);
+            _certificateGenerator.Generate(certficateFile, password);
         }
 
-        void appServer_NewSessionConnected(WebSocketSession session)
+        private void appServer_NewSessionConnected(WebSocketSession session)
         {
-            this.logger.Log("Session connected: {0}", session.RemoteEndPoint.Address);
+            _logger.Log("Session connected: {0}", session.RemoteEndPoint.Address);
         }
 
-        void appServer_NewRequestReceived(WebSocketSession session, string message)
+        private void appServer_NewRequestReceived(WebSocketSession session, string message)
         {
-            this.messageHander.HandleMessageAsync(message);
+            _messageHander.HandleMessageAsync(message);
         }
     }
 }
