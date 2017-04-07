@@ -9,10 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>my_robot_zone_robot_server</RootNamespace>
     <AssemblyName>my-robot-zone-robot-server</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -77,6 +78,8 @@
   <ItemGroup>
     <Compile Include="ISSLCertificateGenerator.cs" />
     <Compile Include="ISystemInterface.cs" />
+    <Compile Include="MRZMessage.cs" />
+    <Compile Include="MRZMessageFactory.cs" />
     <Compile Include="SSLCertificateGenerator.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="IMessageHandler.cs" />

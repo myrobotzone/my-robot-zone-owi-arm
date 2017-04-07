@@ -1,32 +1,32 @@
 ﻿using System.Threading.Tasks;
+
 namespace my_robot_zone_robot_server.MessageHandlers
 {
     public class DefaultMessageHandler : IMessageHandler
     {
-        readonly ILogger logger;
+        private readonly ILogger _logger;
 
         public DefaultMessageHandler(ILogger logger)
         {
-            this.logger = logger;
+            _logger = logger;
         }
 
         public Task<bool> StartAsync()
         {
-            this.logger.Log("Default message handler started");
+            _logger.Log("Default message handler started");
             return Task.FromResult(true);
         }
 
-        public Task HandleMessageAsync(string message)
+        public Task HandleMessageAsync(MRZMessage message)
         {
-            this.logger.Log("Received message {0}", message);
+            _logger.Log("Received message {0} {1}", message.FeatureId, message.Payload);
             return Task.FromResult(true);
         }
 
         public Task StopAsync()
         {
-            this.logger.Log("Default message handler stopped");
+            _logger.Log("Default message handler stopped");
             return Task.FromResult(true);
-
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace my_robot_zone_robot_server
 {
@@ -10,7 +6,7 @@ namespace my_robot_zone_robot_server
     {
         Task<bool> StartAsync();
 
-        Task HandleMessageAsync(string message);
+        Task HandleMessageAsync(MRZMessage message);
 
         Task StopAsync();
     }

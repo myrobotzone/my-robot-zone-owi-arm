@@ -14,8 +14,8 @@ namespace my_robot_zone_robot_server_owi_arm
             Console.WriteLine();
 
             ILogger logger = new ConsoleLogger();
-            //IMessageHandler handler = new OwiArmMessageHandler(logger);
-            IMessageHandler handler = new DefaultMessageHandler(logger);
+            IMessageHandler handler = new OwiArmMessageHandler(logger);
+            //IMessageHandler handler = new DefaultMessageHandler(logger);
 
             var robotArmServer = new RobotServer(handler, logger);
             if (!robotArmServer.Start())
@@ -37,14 +37,6 @@ namespace my_robot_zone_robot_server_owi_arm
 
             Console.WriteLine("The server was stopped!");
             Console.ReadKey();
-        }
-
-        class ConsoleLogger : ILogger
-        {
-            public void Log(string format, params object[] args)
-            {
-                Console.WriteLine(format, args);
-            }
         }
     }
 }

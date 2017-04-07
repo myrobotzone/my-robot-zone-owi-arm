@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using SuperSocket.SocketBase.Config;
 using SuperSocket.WebSocket;
@@ -7,6 +8,7 @@ namespace my_robot_zone_robot_server
 {
     public class RobotServer : IRobotServer
     {
+        private readonly MRZMessageFactory _messageFactory = new MRZMessageFactory();
         private readonly WebSocketServer _appServer = new WebSocketServer();
         private readonly ISSLCertificateGenerator _certificateGenerator = new SSLCertificateGenerator();
         private readonly ILogger _logger;
@@ -73,13 +75,13 @@ namespace my_robot_zone_robot_server
             IServerConfig config = new ServerConfig
             {
                 Port = 5000,
-                Security = "tls",
-                Certificate = new CertificateConfig
-                {
-                    FilePath = certficateFile,
-                    Password = password,
-                    KeyStorageFlags = X509KeyStorageFlags.MachineKeySet
-                }
+                //Security = "tls",
+                //Certificate = new CertificateConfig
+                //{
+                //    FilePath = certficateFile,
+                //    Password = password,
+                //    KeyStorageFlags = X509KeyStorageFlags.MachineKeySet
+                //}
             };
             return config;
         }
@@ -99,7 +101,16 @@ namespace my_robot_zone_robot_server
 
         private void appServer_NewRequestReceived(WebSocketSession session, string message)
         {
-            _messageHander.HandleMessageAsync(message);
+            try
+            {
+                var mrzMessage = _messageFactory.Create(message);
+                _messageHander.HandleMessageAsync(mrzMessage);
+            }
+            catch (System.Exception e)
+            {
+                _logger.Log("Unable to handle {0}, due to {1}", message, e.Message);
+                throw;
+            }
         }
     }
 }
