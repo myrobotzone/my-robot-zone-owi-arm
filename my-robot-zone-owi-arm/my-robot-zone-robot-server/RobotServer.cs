@@ -108,7 +108,7 @@ namespace my_robot_zone_robot_server
             }
             catch (System.Exception e)
             {
-                _logger.Log("Unable to handle {0}, due to {1}", message, e.Message);
+                _logger.Log($"Unable to handle message content = '{message}', because '{e.Message}'");
                 throw;
             }
         }

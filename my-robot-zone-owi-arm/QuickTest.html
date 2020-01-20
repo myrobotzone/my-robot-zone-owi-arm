@@ -3,22 +3,30 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>Test page</title>
 </head>
 <body>
+    <input id="command" type="text" />
+    <button id="sendButton" type="button">send</button>
     <p id="log">
 
     </p>
 </body>
 </html>
 <script type="text/javascript">
-        var log = document.getElementById("log");
-        log.innerHTML = "hell yeah";
-        var exampleSocket = new WebSocket("ws://localhost:5000");
-        exampleSocket.onmessage = function(message){
-            log.innerText = message.data;
-        };
-        exampleSocket.onopen = function () {
-            log.innerHTML += "open";
-        };
+    var log = document.getElementById("log");
+    var sendButton = document.getElementById("sendButton");
+    var exampleSocket = new WebSocket("ws://localhost:5000");
+
+    sendButton.onclick = function () {
+        var command = document.getElementById("command").value;
+        exampleSocket.send(command);
+    }
+
+    exampleSocket.onmessage = function (message) {
+        log.innerText = message.data;
+    };
+    exampleSocket.onopen = function () {
+        log.innerHTML += "open";
+    };
 </script>

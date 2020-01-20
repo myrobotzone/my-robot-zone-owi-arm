@@ -14,8 +14,8 @@ namespace my_robot_zone_robot_server_owi_arm
             Console.WriteLine();
 
             ILogger logger = new ConsoleLogger();
-            IMessageHandler handler = new OwiArmMessageHandler(logger);
-            //IMessageHandler handler = new DefaultMessageHandler(logger);
+            //IMessageHandler handler = new OwiArmMessageHandler(logger);
+            IMessageHandler handler = new DefaultMessageHandler(logger);
 
             var robotArmServer = new RobotServer(handler, logger);
             if (!robotArmServer.Start())

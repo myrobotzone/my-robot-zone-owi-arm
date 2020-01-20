@@ -19,7 +19,7 @@ namespace my_robot_zone_robot_server.MessageHandlers
 
         public Task HandleMessageAsync(MRZMessage message)
         {
-            _logger.Log("Received message {0} {1}", message.FeatureId, message.Payload);
+            _logger.Log($"Received FeatureId = '{message.FeatureId}', Payload = '{message.Payload}'");
             return Task.FromResult(true);
         }
 
